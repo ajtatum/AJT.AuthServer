@@ -1,10 +1,6 @@
-﻿using System.Linq;
-using System.Reflection;
-using AJT.AuthServer.Data;
+﻿using AJT.AuthServer.Data;
 using AJT.AuthServer.Models;
 using AJT.AuthServer.Services;
-using IdentityServer4.EntityFramework.DbContexts;
-using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -94,8 +90,6 @@ namespace AJT.AuthServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //InitializeDatabase(app);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -118,56 +112,5 @@ namespace AJT.AuthServer
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
-
-        //private void InitializeDatabase(IApplicationBuilder app)
-        //{
-        //    using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-        //    {
-        //        var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-
-        //        //context.Clients.ToList().ForEach(x =>
-        //        //{
-        //        //    context.Clients.Remove(x);
-        //        //});
-        //        //context.SaveChanges();
-        //        //context.IdentityResources.ToList().ForEach(x =>
-        //        //{
-        //        //    context.IdentityResources.Remove(x);
-        //        //});
-        //        //context.SaveChanges();
-        //        //context.ApiResources.ToList().ForEach(x =>
-        //        //{
-        //        //    context.ApiResources.Remove(x);
-        //        //});
-        //        //context.SaveChanges();
-
-        //        if (!context.Clients.Any())
-        //        {
-        //            foreach (var client in Config.GetClients())
-        //            {
-        //                context.Clients.Add(client.ToEntity());
-        //            }
-        //            context.SaveChanges();
-        //        }
-
-        //        if (!context.IdentityResources.Any())
-        //        {
-        //            foreach (var resource in Config.GetIdentityResources())
-        //            {
-        //                context.IdentityResources.Add(resource.ToEntity());
-        //            }
-        //            context.SaveChanges();
-        //        }
-
-        //        if (!context.ApiResources.Any())
-        //        {
-        //            foreach (var resource in Config.GetApiResources())
-        //            {
-        //                context.ApiResources.Add(resource.ToEntity());
-        //            }
-        //            context.SaveChanges();
-        //        }
-        //    }
-        //}
     }
 }
