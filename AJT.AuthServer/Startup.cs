@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AJT.AuthServer
 {
@@ -72,18 +71,6 @@ namespace AJT.AuthServer
                 {
                     options.ClientId = Configuration["GoogleOAuth:ClientId"];
                     options.ClientSecret = Configuration["GoogleOAuth:ClientSecret"];
-                })
-                .AddOpenIdConnect("oidc", "OpenID Connect", options =>
-                {
-                    options.Authority = "https://demo.identityserver.io/";
-                    options.ClientId = "implicit";
-                    options.SaveTokens = true;
-
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        NameClaimType = "name",
-                        RoleClaimType = "role"
-                    };
                 });
         }
 
