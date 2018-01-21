@@ -48,12 +48,10 @@ namespace AJT.AuthServer
             // configure identity server with in-memory stores, keys, clients and scopes
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddAspNetIdentity<ApplicationUser>()
-                // this adds the config data from DB (clients, resources)
-                .AddConfigurationStore(options =>
+                // this adds the config data from DB (clients, resources, CORS)
+                .AddConfigurationStore(options => options.ResolveDbContextOptions = (provider, builder) =>
                 {
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString);
+                    builder.UseSqlServer(connectionString);
                 })
                 // this adds the operational data from DB (codes, tokens, consents)
                 .AddOperationalStore(options =>
@@ -64,7 +62,8 @@ namespace AJT.AuthServer
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
                     options.TokenCleanupInterval = 30;
-                });
+                })
+                .AddAspNetIdentity<ApplicationUser>();
 
             services.AddAuthentication()
                 .AddGoogle(options =>
